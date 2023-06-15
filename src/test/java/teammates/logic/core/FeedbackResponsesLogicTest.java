@@ -68,6 +68,80 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
     }
 
     @Test
+    public void testIsResponseOfFeedbackQuestionVisibleToStudent(){
+        FeedbackQuestionAttributes questionCase = getQuestionFromDatabase("qn1InSession1InCourse2");
+        
+        //CT1
+        questionCase.getShowResponsesTo().clear();
+        questionCase.getShowResponsesTo().add(FeedbackParticipantType.STUDENTS); 
+        questionCase.getShowResponsesTo().add(FeedbackParticipantType.TEAMS);               
+        questionCase.setRecipientType(FeedbackParticipantType.TEAMS);
+        questionCase.setGiverType(FeedbackParticipantType.GIVER);
+
+        assertTrue(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(questionCase));
+
+        //CT2
+        questionCase.getShowResponsesTo().clear();
+        questionCase.getShowResponsesTo().add(FeedbackParticipantType.TEAMS); 
+        questionCase.getShowResponsesTo().add(FeedbackParticipantType.RECEIVER);               
+        questionCase.setRecipientType(FeedbackParticipantType.OWN_TEAM_MEMBERS);
+        questionCase.setGiverType(FeedbackParticipantType.GIVER);
+
+        assertTrue(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(questionCase));
+
+        //CT3
+        questionCase.getShowResponsesTo().clear();
+        questionCase.getShowResponsesTo().add(FeedbackParticipantType.TEAMS); 
+        questionCase.getShowResponsesTo().add(FeedbackParticipantType.RECEIVER);               
+        questionCase.setRecipientType(FeedbackParticipantType.TEAMS);
+        questionCase.setGiverType(FeedbackParticipantType.GIVER);
+
+        assertTrue(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(questionCase));
+
+
+        //CT4
+        questionCase.getShowResponsesTo().clear();
+        questionCase.getShowResponsesTo().add(FeedbackParticipantType.TEAMS); 
+        questionCase.getShowResponsesTo().add(FeedbackParticipantType.RECEIVER);               
+        questionCase.setRecipientType(FeedbackParticipantType.RECEIVER);
+        questionCase.setGiverType(FeedbackParticipantType.TEAMS);
+
+        assertTrue(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(questionCase));
+
+
+        //CT5
+        questionCase.getShowResponsesTo().clear();
+        questionCase.getShowResponsesTo().add(FeedbackParticipantType.TEAMS); 
+        questionCase.getShowResponsesTo().add(FeedbackParticipantType.OWN_TEAM_MEMBERS);               
+        questionCase.setRecipientType(FeedbackParticipantType.TEAMS);
+        questionCase.setGiverType(FeedbackParticipantType.GIVER);
+
+        assertTrue(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(questionCase));
+
+
+        //CT6
+        questionCase.getShowResponsesTo().clear();
+        questionCase.getShowResponsesTo().add(FeedbackParticipantType.TEAMS);               
+        questionCase.setRecipientType(FeedbackParticipantType.TEAMS);
+        questionCase.setGiverType(FeedbackParticipantType.GIVER);
+
+        assertFalse(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(questionCase));
+
+
+        //CT7
+        questionCase.getShowResponsesTo().clear();
+        questionCase.getShowResponsesTo().add(FeedbackParticipantType.TEAMS); 
+        questionCase.getShowResponsesTo().add(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS);               
+        questionCase.setRecipientType(FeedbackParticipantType.TEAMS);
+        questionCase.setGiverType(FeedbackParticipantType.GIVER);
+
+        assertTrue(frLogic.isResponseOfFeedbackQuestionVisibleToStudent(questionCase));
+
+
+
+    }
+
+    @Test
     public void testAreThereResponsesForQuestion() {
         FeedbackQuestionAttributes questionWithResponse;
         FeedbackQuestionAttributes questionWithoutResponse;
