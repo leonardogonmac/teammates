@@ -67,6 +67,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
         removeAndRestoreDataBundle(responseVisibilityBundle);
     }
 
+    //Teste elaborado para a disciplina de Testes de Software
     @Test
     public void testIsResponseOfFeedbackQuestionVisibleToStudent(){
         FeedbackQuestionAttributes questionCase = getQuestionFromDatabase("qn1InSession1InCourse2");
